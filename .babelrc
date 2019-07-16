@@ -8,6 +8,6 @@
     "transform-decorators-legacy",
     "transform-react-jsx",
     "syntax-dynamic-import",
-    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
+    ["import", { "libraryName": "antd-mobile", "style": "css" }]
   ]
 }

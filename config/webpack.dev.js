@@ -1,50 +1,53 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
-const path = require('path');
-const webpack = require('webpack');
-
+const merge = require("webpack-merge");
+const common = require("./webpack.common");
+const path = require("path");
+const webpack = require("webpack");
+const domain = require('./domainConfig');
 module.exports = merge(common, {
-    mode:'development',
-    devtool: 'inline-source-map',
+    mode:"development",
+    devtool: "inline-source-map",
     output: {
-        filename: 'js/[name].[hash].js'
+        filename: "js/[name].[hash].js",
     },
     devServer: {
-        contentBase: path.resolve(__dirname, '../dist'),
-        port:9000,
-        historyApiFallback:true,
-        hot:true,
+        contentBase: path.resolve(__dirname, "../dist"),
+        port: 9000,
+        historyApiFallback: true,
+        hot: true,
         proxy:{
-            '/api/*': {
-                target: "",
+            '/app/*': {
+                target: domain[domain.environmental].api,
                 changeOrigin: true,
-                pathRewrite: {'^/api' : ''}
+                pathRewrite: {'^/app' : ''}
             },
-            '/oauth/*': {
-                target: "",
+            '/goods/*': {
+                target: 'http://192.168.1.152:8081/',
                 changeOrigin: true,
+                pathRewrite: {'^/goods' : ''}
             },
-            '/wx/*' : {
-                target: ' https://apis.map.qq.com/',
+            '/store/*': {
+                target: 'http://192.168.1.152:8082/',
                 changeOrigin: true,
-                pathRewrite: {'^/wx' : ''},
+                pathRewrite: {'^/store' : ''}
             },
-            '/logout/*' : {
-                target: "",
+            '/node/*': {
+                target: 'http://localhost:9191/',
                 changeOrigin: true,
-                pathRewrite: { '^/logout' : ''}
+                pathRewrite: {'^/node' : ''}
             },
-            '/getConfig/*' : {
-                target: 'http://localhost:8080/',
-            },
-            '/download/*' : {
-                target: 'http://10.1.80.220:8085/',
+            '/auth/*': {
+                target: domain[domain.environmental].auth,
                 changeOrigin: true,
-                pathRewrite: { '^/download' : ''}
-            }
+                pathRewrite: {'^/auth' : ''}
+            },
+            '/soap/*': {
+                target: 'http://localhost:8887/',
+                changeOrigin: true,
+                pathRewrite: {'^/soap' : ''}
+            },
         }
     },
-    plugins: [
+    plugins:[
         new webpack.HotModuleReplacementPlugin()
     ]
 });

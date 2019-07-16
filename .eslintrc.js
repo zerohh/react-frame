@@ -11,7 +11,8 @@ module.exports  = {
         "ecmaVersion":"7",
         "sourceType":"module",
         "ecmaFeatures":{
-            "jsx":true
+            "jsx":true,
+            "legacyDecorators": true
         }
     },
     "plugins":[
@@ -104,7 +105,7 @@ module.exports  = {
 // 强制把变量的使用限制在其定义的作用域范围内
         "block-scoped-var":0,
 // 限制圈复杂度，也就是类似if else能连续接多少个
-        "complexity": [2,35],
+        "complexity": [2,75],
 // 要求 return 语句要么总是指定返回的值，要么不指定
         "consistent-return":0,
 // 强制所有控制语句使用一致的括号风格
